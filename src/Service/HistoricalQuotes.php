@@ -11,7 +11,7 @@ use Symfony\Contracts\HttpClient\Exception\ServerExceptionInterface;
 use Symfony\Contracts\HttpClient\Exception\TransportExceptionInterface;
 use Symfony\Contracts\HttpClient\HttpClientInterface;
 
-class HistoricalQuotesService
+class HistoricalQuotes
 {
     public function __construct(
         private readonly HttpClientInterface $rapidApiClient,

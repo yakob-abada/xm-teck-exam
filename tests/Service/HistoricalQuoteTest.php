@@ -2,13 +2,13 @@
 
 namespace App\Tests\Service;
 
-use App\Entity\Company;
-use App\Service\HistoricalQuotesService;
+use App\Model\Company;
+use App\Service\HistoricalQuotes;
 use PHPUnit\Framework\TestCase;
 use Symfony\Component\HttpClient\MockHttpClient;
 use Symfony\Component\HttpClient\Response\MockResponse;
 
-class HistoricalQuoteServiceTest extends TestCase
+class HistoricalQuoteTest extends TestCase
 {
     public function testRetrievingData(): void
     {
@@ -60,7 +60,7 @@ class HistoricalQuoteServiceTest extends TestCase
 
         $client = new MockHttpClient($responses);
 
-        $sut = new HistoricalQuotesService($client);
+        $sut = new HistoricalQuotes($client);
 
         $this->assertEquals($result, $sut->get($company));
     }

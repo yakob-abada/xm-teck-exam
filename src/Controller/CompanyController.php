@@ -4,7 +4,8 @@ namespace App\Controller;
 
 use App\Model\Company;
 use App\Form\Type\CompanyType;
-use App\Service\HistoricalQuotesService;
+use App\Service\HistoricalQuotes;
+use App\Service\NewCompanySubmissionMediator;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -15,7 +16,7 @@ use Symfony\Component\Validator\Validator\ValidatorInterface;
 class CompanyController extends AbstractController
 {
     #[Route('/', name: 'create_company')]
-    public function index(Request $request): Response
+    public function index(Request $request, NewCompanySubmissionMediator $submissionMediator): Response
     {
         $company = new Company();
 
@@ -24,19 +25,17 @@ class CompanyController extends AbstractController
 
         if ($form->isSubmitted() && $form->isValid()) {
             // will do something here.
+            $historicalQuotes = $submissionMediator->mediate($company);
+
+            return $this->render('company/get.html.twig', [
+                'historical_quotes' => $historicalQuotes,
+                'company' => $company,
+            ]);
         }
 
         return $this->render('company/index.html.twig', [
             'controller_name' => 'CompanyController',
             'form' => $form,
-        ]);
-    }
-
-    #[Route('/historical_quotes', name: 'get_company_historical_quotes')]
-    public function getHistoricalQuotes(HistoricalQuotesService $historicalQuotesService): Response
-    {
-        return $this->render('company/get.html.twig', [
-            'controller_name' => 'CompanyController',
         ]);
     }
 }

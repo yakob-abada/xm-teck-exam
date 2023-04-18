@@ -2,14 +2,14 @@
 
 namespace App\Tests\Service;
 
-use App\Entity\Company;
-use App\Service\NasdaqService;
+use App\Model\Company;
+use App\Service\Nasdaq;
 use App\Service\SymbolNotFoundException;
 use PHPUnit\Framework\TestCase;
 use Symfony\Component\HttpClient\MockHttpClient;
 use Symfony\Component\HttpClient\Response\MockResponse;
 
-class NasdaqServiceTest extends TestCase
+class NasdaqTest extends TestCase
 {
     public function testRetrievingData(): void
     {
@@ -51,7 +51,7 @@ class NasdaqServiceTest extends TestCase
 
         $client = new MockHttpClient($responses);
 
-        $sut = new NasdaqService($client);
+        $sut = new Nasdaq($client);
 
         $this->assertEquals($result, $sut->get($company));
     }
@@ -78,7 +78,7 @@ class NasdaqServiceTest extends TestCase
 
         $client = new MockHttpClient($responses);
 
-        $sut = new NasdaqService($client);
+        $sut = new Nasdaq($client);
 
         $this->expectException(SymbolNotFoundException::class);
         $sut->get($company);

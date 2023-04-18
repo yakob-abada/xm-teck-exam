@@ -12,6 +12,8 @@ class Company
     #[CompanyAssert\SymbolCompany]
     private ?string $symbol = null;
 
+    private ?string $name = null;
+
     private ?\DateTimeInterface $startDate = null;
 
     private ?\DateTimeInterface $endDate = null;
@@ -66,5 +68,17 @@ class Company
         $this->email = $email;
 
         return $this;
+    }
+
+    public function setName(string $name): self
+    {
+        $this->name = $name;
+
+        return $this;
+    }
+
+    public function getName(): ?string
+    {
+        return $this->name;
     }
 }

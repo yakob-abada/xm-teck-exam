@@ -6,7 +6,7 @@ use App\Model\Company;
 use Symfony\Component\Mailer\MailerInterface;
 use Symfony\Component\Mime\Email;
 
-class NewCompanyNotificationService
+class NewCompanyNotification
 {
     public function __construct(
         private readonly string $sender,
@@ -19,7 +19,7 @@ class NewCompanyNotificationService
         $email = (new Email())
             ->from($this->sender)
             ->to($company->getEmail())
-            ->subject('submitted Company Symbol = ' . $company->getSymbol() . ' => Company’s Name = Google')
+            ->subject('submitted Company Symbol = ' . $company->getSymbol() . ' => Company’s Name = ' . $company->getName())
             ->text(
                 'From ' . $company->getStartDate()->format('Y-m-d') .
                 ' to ' . $company->getEndDate()->format('Y-m-d')

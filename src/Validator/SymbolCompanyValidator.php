@@ -3,7 +3,7 @@
 namespace App\Validator;
 
 use App\Model\Company;
-use App\Service\NasdaqService;
+use App\Service\Nasdaq;
 use App\Service\SymbolNotFoundException;
 use Symfony\Component\Validator\Constraint;
 use Symfony\Component\Validator\ConstraintValidator;
@@ -11,7 +11,7 @@ use Symfony\Component\Validator\ConstraintValidator;
 class SymbolCompanyValidator extends ConstraintValidator
 {
     public function __construct(
-        private readonly NasdaqService $companyService
+        private readonly Nasdaq $companyService
     ) {
     }
 
