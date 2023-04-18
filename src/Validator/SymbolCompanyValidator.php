@@ -2,7 +2,7 @@
 
 namespace App\Validator;
 
-use App\Entity\Company;
+use App\Model\Company;
 use App\Service\NasdaqService;
 use App\Service\SymbolNotFoundException;
 use Symfony\Component\Validator\Constraint;

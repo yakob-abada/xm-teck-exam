@@ -2,7 +2,7 @@
 
 namespace App\Service;
 
-use App\Entity\Company;
+use App\Model\Company;
 use Symfony\Component\DependencyInjection\Attribute\Autowire;
 use Symfony\Contracts\HttpClient\Exception\ClientExceptionInterface;
 use Symfony\Contracts\HttpClient\Exception\DecodingExceptionInterface;

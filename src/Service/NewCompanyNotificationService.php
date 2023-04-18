@@ -2,7 +2,7 @@
 
 namespace App\Service;
 
-use App\Entity\Company;
+use App\Model\Company;
 use Symfony\Component\Mailer\MailerInterface;
 use Symfony\Component\Mime\Email;
 

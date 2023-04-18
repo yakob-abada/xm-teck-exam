@@ -2,7 +2,7 @@
 
 namespace App\Validator;
 
-use App\Entity\Company;
+use App\Model\Company;
 use Symfony\Component\Validator\Constraint;
 use Symfony\Component\Validator\ConstraintValidator;
 use Symfony\Component\Validator\Exception\UnexpectedValueException;
