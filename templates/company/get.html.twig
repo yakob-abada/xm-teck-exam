@@ -2,6 +2,14 @@
 
 {% block title %}Hello CompanyController!{% endblock %}
 
+{% block javascripts %}
+    {{ parent() }}
+    <script src="https://cdn.jsdelivr.net/npm/luxon@1.26.0"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@3.0.1/dist/chart.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chartjs-adapter-luxon@1.0.0"></script>
+    <script src="{{ asset('assets/js/chartjs-chart-financial.js') }}"></script>
+{% endblock %}
+
 {% block body %}
     <style>
         .example-wrapper { margin: 1em auto; max-width: 1000px; width: 95%; font: 18px/1.5 sans-serif; }
@@ -46,7 +54,33 @@
                 </table>
             </div>
             <div class="tab-pane fade" id="nav-chart" role="tabpanel" aria-labelledby="nav-chart-tab">
+                <canvas id="chart"></canvas>
+                <script>
+                    const ctx = document.getElementById('chart').getContext('2d');
+                    ctx.canvas.width = 1000;
+                    ctx.canvas.height = 500;
 
+                    const data = JSON.parse('{{ historical_quotes|json_encode|raw }}');
+                    const mappedData = data.prices.map(element => {
+                        return {
+                            x: element.date,
+                            o: element.open,
+                            h: element.high,
+                            l: element.low,
+                            c: element.close
+                        }
+                    })
+
+                    new Chart(ctx, {
+                        type: 'candlestick',
+                        data: {
+                            datasets: [{
+                                label: 'Historical quotes',
+                                data: mappedData
+                            }]
+                        }
+                    });
+                </script>
             </div>
         </div>
     </div>
