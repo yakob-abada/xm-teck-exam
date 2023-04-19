@@ -25,7 +25,7 @@ class HistoricalQuotes
      * @throws DecodingExceptionInterface
      * @throws ClientExceptionInterface
      */
-    public function get(Company $company): array
+    public function getBetweenRange(Company $company): array
     {
         $response = $this
             ->rapidApiClient
@@ -38,6 +38,20 @@ class HistoricalQuotes
                 ]
             );
 
-        return $response->toArray();
+        $result = $response->toArray();
+        $newPrices = [];
+
+        foreach ($result['prices'] as $price) {
+            $datePrice = \DateTime::createFromFormat('U', $price['date']);
+            if(
+                $datePrice >= $company->getStartDate() &&
+                $datePrice <= $company->getEndDate()
+            ) {
+                $newPrices[] = $price;
+            }
+        }
+
+        $result['prices'] = $newPrices;
+        return $result;
     }
 }

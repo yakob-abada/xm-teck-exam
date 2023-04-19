@@ -33,7 +33,7 @@ class NewCompanySubmissionMediatorTest extends TestCase
         $historicalQuote = $this->createMock(HistoricalQuotes::class);
         $historicalQuote
             ->expects($this->once())
-            ->method('get')
+            ->method('getBetweenRange')
             ->with($company)
             ->willReturn([
                 'prices' => []

@@ -19,7 +19,7 @@ class NewCompanySubmissionMediator
         $this->setCompanyName($company);
         $this->newCompanyNotification->send($company);
 
-        return $this->historicalQuotes->get($company);
+        return $this->historicalQuotes->getBetweenRange($company);
     }
 
     private function setCompanyName(Company $company): void

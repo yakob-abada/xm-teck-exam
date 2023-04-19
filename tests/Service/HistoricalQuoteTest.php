@@ -52,7 +52,11 @@ class HistoricalQuoteTest extends TestCase
         ];
 
         $company = new Company();
-        $company->setSymbol('AMRN');
+        $company
+            ->setSymbol('AMRN')
+            ->setStartDate(new \DateTime('2023-04-11'))
+            ->setEndDate(new \DateTime('2023-04-18'))
+        ;
 
         $responses = [
             new MockResponse($bodyJson),
@@ -62,6 +66,6 @@ class HistoricalQuoteTest extends TestCase
 
         $sut = new HistoricalQuotes($client);
 
-        $this->assertEquals($result, $sut->get($company));
+        $this->assertEquals($result, $sut->getBetweenRange($company));
     }
 }
