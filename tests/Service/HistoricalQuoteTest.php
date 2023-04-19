@@ -68,4 +68,53 @@ class HistoricalQuoteTest extends TestCase
 
         $this->assertEquals($result, $sut->getBetweenRange($company));
     }
+
+    public function testRetrievingDataOutOrRange(): void
+    {
+        $bodyJson = '{
+            "prices": [{
+                "date": 1681747268,
+                "open": 1.350000023841858,
+                "high": 1.3694000244140625,
+                "low": 1.3300000429153442,
+                "close": 1.350000023841858,
+                "volume": 815162,
+                "adjclose": 1.350000023841858
+            }],
+            "isPending": false,
+            "firstTradeDate": 733674600,
+            "id": "",
+            "timeZone": {
+                "gmtOffset": -14400
+            },
+            "eventsData": []
+        }
+        ';
+
+        $result = [
+            'prices' => [],
+            'isPending' => false,
+            'firstTradeDate' => 733674600,
+            'id' =>'',
+            'timeZone' => ['gmtOffset' => -14400],
+            'eventsData' => []
+        ];
+
+        $company = new Company();
+        $company
+            ->setSymbol('AMRN')
+            ->setStartDate(new \DateTime('2023-03-11'))
+            ->setEndDate(new \DateTime('2023-03-18'))
+        ;
+
+        $responses = [
+            new MockResponse($bodyJson),
+        ];
+
+        $client = new MockHttpClient($responses);
+
+        $sut = new HistoricalQuotes($client);
+
+        $this->assertEquals($result, $sut->getBetweenRange($company));
+    }
 }
